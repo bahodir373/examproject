@@ -30,11 +30,11 @@ jobs:
               mkdir -p $APP_DIR
               git clone https://github.com/bahodir373/examproject.git $APP_DIR
             else
-              cd /root/$APP_DIR
+              cd $APP_DIR
               git pull origin main
             fi
 
-            cd /root/$APP_DIR
+            cd $APP_DIR
             echo 'PORT=${PORT}' > .env
             npm install
 
