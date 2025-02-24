@@ -1,0 +1,56 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+        shell: bash
+
+      - name: Set git config
+        run: |
+          git config --global user.email "zteqwertyuiop672@gmail.com"
+          git config --global user.name "bahodir373"
+
+      - name: Deploy to server
+        env:
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USERNAME }}
+          APP_DIR: ${{ secrets.APP_DIR }}
+          PORT: ${{ secrets.PORT }}
+        run: |
+          ssh $USER@$HOST "
+            if [ ! -d $APP_DIR ]; then
+              git clone https://github.com:bahodir373/exam-project.git $APP_DIR
+            else
+              cd $APP_DIR
+              git pull origin main
+            fi
+
+            cd $APP_DIR
+            echo 'PORT=${PORT}' > .env
+            npm install
+
+            if pm2 list | grep -q 'blog-app'; then
+              pm2 restart blog-app
+            else
+              pm2 start index.js --name blog-app
+            fi
+
+            pm2 save
+          "
+        shell: bash
