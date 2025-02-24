@@ -25,7 +25,7 @@ app.use(cors())
 connectDB()
 app.use(errorHandler)
 app.get('/', (req, res) => {
-	res.send('<h1>Server is running.</h1>');
+	res.send('<h1>Server ishlayapti...</h1>');
 });
 app.use('/api', categoryRouter)
 app.use('/api', postRouter)
