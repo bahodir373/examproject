@@ -23,6 +23,8 @@ jobs:
           USER: ${{secrets.VPS_USERNAME}}
           APP_DIR: ${{secrets.VPS_PROJECT_PATH}}
           PORT: ${{secrets.VPS_PORT}}
+          MONGO_URI: ${{secrets.MONGO_URI}}
+          SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
           ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
           ssh $USER@$HOST "
@@ -36,6 +38,8 @@ jobs:
 
             cd $APP_DIR
             echo 'PORT=${PORT}' > .env
+            echo 'MONGO_URI=${MONGO_URI}' > .env
+            echo 'SECRET_KEY=${SECRET_KEY}' > .env
             npm install
 
             if pm2 list | grep -q 'blog-app'; then
