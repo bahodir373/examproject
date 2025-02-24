@@ -21,7 +21,7 @@ jobs:
         env:
           HOST: ${{secrets.VPS_HOST}}
           USER: ${{secrets.VPS_USERNAME}}
-          APP_DIR: /ci_cd
+          APP_DIR: ${{secrets.VPS_PROJECT_PATH}}
           PORT: ${{secrets.VPS_PORT}}
         run: |
           ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
