@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'https://localhost:8080/api',
+        url: 'https://api.husainov.uz/api',
       },
     ],
 		tags: [
