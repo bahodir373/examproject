@@ -37,9 +37,6 @@ jobs:
             fi
 
             cd $APP_DIR
-            echo 'PORT=${PORT}' > .env
-            echo 'MONGO_URI=${MONGO_URI}' > .env
-            echo 'SECRET_KEY=${SECRET_KEY}' > .env
             npm install
 
             if pm2 list | grep -q 'blog-app'; then
