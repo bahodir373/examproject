@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:8080/api',
+        url: 'https://localhost:8080/api',
       },
     ],
 		tags: [
