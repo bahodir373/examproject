@@ -22,7 +22,7 @@ jobs:
           HOST: ${{secrets.VPS_HOST}}
           USER: ${{secrets.VPS_USERNAME}}
           APP_DIR: /ci_cd
-          PORT: ${{secrets.PORT}}
+          PORT: ${{secrets.VPS_PORT}}
         run: |
           ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
           ssh $USER@$HOST "
