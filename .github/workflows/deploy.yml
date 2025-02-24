@@ -34,7 +34,7 @@ jobs:
               git pull origin main
             fi
 
-            cd $APP_DIR
+            cd /root/$APP_DIR
             echo 'PORT=${PORT}' > .env
             npm install
 
