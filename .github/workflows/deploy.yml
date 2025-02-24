@@ -30,7 +30,7 @@ jobs:
               mkdir -p $APP_DIR
               git clone https://github.com/bahodir373/examproject.git $APP_DIR
             else
-              cd $APP_DIR
+              cd /root/$APP_DIR
               git pull origin main
             fi
 
