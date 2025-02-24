@@ -1,26 +1,49 @@
-name: Deploy Express App to VPS
-
+name: Deploy to VPS
 on:
   push:
     branches:
       - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup SSH and Deploy
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
-          cd ${{ secrets.VPS_PROJECT_PATH }}
-          git pull origin main
-          npm install
-          pm2 restart blog-app
-        EOF
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+        shell: bash
+
+      - name: Deploy to server
+        env:
+          HOST: ${{secrets.VPS_HOST}}
+          USER: ${{secrets.VPS_USERNAME}}
+          APP_DIR: /ci_cd
+          PORT: ${{secrets.PORT}}
+        run: |
+          ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+          ssh $USER@$HOST "
+            if [ ! -d $APP_DIR ]; then
+              mkdir -p $APP_DIR
+              git clone https://github.com/bahodir373/examproject.git $APP_DIR
+            else
+              cd $APP_DIR
+              git pull origin main
+            fi
+
+            cd $APP_DIR
+            echo 'PORT=${PORT}' > .env
+            npm install
+
+            if pm2 list | grep -q 'blog-app'; then
+              pm2 restart blog-app
+            else
+              pm2 start dist/main.js --name blog-app
+            fi
+
+            pm2 save
+          "
+        shell: bash
