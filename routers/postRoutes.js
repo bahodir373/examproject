@@ -103,7 +103,7 @@ const upload = multer({ storage });
  *               tags:
  *                 type: string
  *                 description: Tag nomlari(Har bir tag vergul bilan ajratiladi)
- *                 example: 'sanat, Texnologiya'
+ *                 example: 'sanat, sud'
  *               highlighted:
  *                 type: boolean
  *               image:

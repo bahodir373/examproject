@@ -39,7 +39,9 @@ exports.getPostBySlug = async (req, res, next) => {
 
 exports.createPost = async (req, res, next) => {
   try {
-    const { title, category, content, tags, highlighted } = req.body;
+    const { title, category, content, tagsString, highlighted } = req.body;
+
+    let tags = tagsString.split(",").map(tag => tag.trim().toLowerCase());
 
     let imagePath = "";
 
