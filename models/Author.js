@@ -7,7 +7,8 @@ const authorSchema = new mongoose.Schema({
   education: { type: String, required: true },
   achievements: { type: [String], default: [] },
   website: { type: String },
-  photo: { type: String }
+  photo: { type: String },
+  image: {type: String}
 });
 
 module.exports = mongoose.model('Author', authorSchema);
