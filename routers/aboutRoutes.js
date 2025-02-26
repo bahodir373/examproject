@@ -82,9 +82,11 @@ const upload = multer({ storage });
  *                 description: Ta’limi
  *                 example: "Toshkent Davlat Universiteti"
  *               achievements:
- *                 type: string
- *                 description: Yutuqlar (JSON formatda)
- *                 example: '["Kitob muallifi", "Professor"]'
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Yutuqlar ro‘yxati
+ *                 example: ["Kitob muallifi", "Professor"]
  *               website:
  *                 type: string
  *                 description: Shaxsiy veb-sayti
@@ -101,6 +103,7 @@ const upload = multer({ storage });
  *       500:
  *         description: Server xatosi
  */
+
 aboutRouter.post('/author', verifyAdmin, upload.single('image'), createAuthor);
 
 /**
