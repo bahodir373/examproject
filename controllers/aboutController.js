@@ -3,11 +3,15 @@ const Author = require('../models/Author');
 exports.createAuthor = async (req, res, next) => {
   try {
     const { fullName, birthDate, birthPlace, education, website } = req.body;
-    const achievements = req.body.achievements ? req.body.achievements.split(',').map(a => a.trim()) : [];
+    let achievements = req.body.achievements;
+    if (!Array.isArray(achievements)) {
+      achievements = achievements ? achievements.split(",").map(tag => tag.trim()) : [];
+    }
+
     const image = req.file ? req.file.filename : null;
 
     if (!fullName) {
-      const error = new Error("FullName majburiy");
+      const error = new Error("Ismingizni to'liq kiriting");
       error.statusCode = 400;
       return next(error);
     }

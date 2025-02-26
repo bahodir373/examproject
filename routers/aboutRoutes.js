@@ -135,9 +135,13 @@ aboutRouter.post('/author', verifyAdmin, upload.single('image'), createAuthor);
  *               education:
  *                 type: string
  *               achievements:
- *                 type: string
- *                 description: Yutuqlari(Har bir yutuq vergul bilan ajratiladi)
- *                 example: 'yutuq1, yutuq2'
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Erishilgan yutuqlar ro‘yxati
+ *                 example:
+ *                   - "yutuq1"
+ *                   - "yutuq2"
  *               website:
  *                 type: string
  *               image:
