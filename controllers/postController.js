@@ -58,7 +58,7 @@ exports.createPost = async (req, res, next) => {
     console.log(tagDocs);
     console.log(tagIds);
 
-    if (tagIds.length !== tags.length) {
+    if (tagIds.length !== newTags.length) {
       const err = new Error("Ba'zi taglar topilmadi");
       err.statusCode = 400;
       return next(err);
