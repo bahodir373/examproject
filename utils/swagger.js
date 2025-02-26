@@ -201,11 +201,6 @@ const options = {
           type: 'object',
           required: ['id', 'name'],
           properties: {
-            id: {
-              type: 'integer',
-              description: 'Tagning unikal ID raqami',
-              example: 101,
-            },
             name: {
               type: 'string',
               description: 'Tag nomi',
@@ -216,11 +211,6 @@ const options = {
 				Term: {
 					type: "object",
 					properties: {
-						_id: {
-							type: "string",
-							description: "Term ID",
-							example: "65d52e21f9b8a55a23a6c9f1"
-						},
 						term: {
 							type: "string",
 							description: "Atama nomi",
@@ -230,23 +220,6 @@ const options = {
 							type: "string",
 							description: "Atama izohi",
 							example: "Konstitutsiya — davlatning asosiy qonuni."
-						},
-						createdAt: {
-							type: "string",
-							format: "date-time",
-							description: "Atama yaratilgan sana",
-							example: "2024-02-22T14:45:00.000Z"
-						},
-						updatedAt: {
-							type: "string",
-							format: "date-time",
-							description: "Atama oxirgi marta tahrirlangan sana",
-							example: "2024-02-23T10:30:00.000Z"
-						},
-						__v: {
-							type: "integer",
-							description: "Versiya raqami (MongoDB tomonidan boshqariladi)",
-							example: 0
 						}
 					}
 				}
