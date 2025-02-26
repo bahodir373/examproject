@@ -55,6 +55,8 @@ exports.createPost = async (req, res, next) => {
 
     const tagDocs = await Tag.find({ name: { $in: newTags } });
     const tagIds = tagDocs.map(tag => tag.id);
+    console.log(tagDocs);
+    console.log(tagIds);
 
     if (tagIds.length !== tags.length) {
       const err = new Error("Ba'zi taglar topilmadi");
