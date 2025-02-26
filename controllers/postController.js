@@ -39,9 +39,12 @@ exports.getPostBySlug = async (req, res, next) => {
 
 exports.createPost = async (req, res, next) => {
   try {
-    const { title, category, content, tags, highlighted } = req.body;
+    const { title, category, content, highlighted } = req.body;
 
-    let newTags = tags.split(",").map(tag => tag.trim().toLowerCase());
+    let tags = req.body.tags;
+    if (!Array.isArray(tags)) {
+      tags = tags ? tags.split(",").map(tag => tag.trim()) : [];
+    }
 
     let imagePath = "";
 
@@ -53,12 +56,10 @@ exports.createPost = async (req, res, next) => {
       return next(err);
     }
 
-    const tagDocs = await Tag.find({ name: { $in: newTags } });
+    const tagDocs = await Tag.find({ name: { $in: tags } });
     const tagIds = tagDocs.map(tag => tag.id);
-    console.log(tagDocs);
-    console.log(tagIds);
 
-    if (tagIds.length !== newTags.length) {
+    if (tagIds.length !== tags.length) {
       const err = new Error("Ba'zi taglar topilmadi");
       err.statusCode = 400;
       return next(err);
@@ -89,7 +90,6 @@ exports.updatePost = async (req, res, next) => {
     const { title, category, content, highlighted } = req.body;
     let tags = req.body.tags;
 
-    // `tags` array sifatida kelmagan bo‘lsa, uni arrayga aylantirish
     if (!Array.isArray(tags)) {
       tags = tags ? tags.split(",").map(tag => tag.trim()) : [];
     }
@@ -102,6 +102,15 @@ exports.updatePost = async (req, res, next) => {
     const post = await Post.findOne({ slug: req.params.slug });
     if (!post) {
       return res.status(404).json({ message: "Post topilmadi" });
+    }
+
+    const tagDocs = await Tag.find({ name: { $in: tags } });
+    const tagIds = tagDocs.map(tag => tag.id);
+
+    if (tagIds.length !== tags.length) {
+      const err = new Error("Ba'zi taglar topilmadi");
+      err.statusCode = 400;
+      return next(err);
     }
 
     post.title = title || post.title;

@@ -101,9 +101,13 @@ const upload = multer({ storage });
  *               content:
  *                 type: string
  *               tags:
- *                 type: string
- *                 description: Tag nomlari(Har bir tag vergul bilan ajratiladi)
- *                 example: 'sanat, sud'
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Post teglar ro‘yxati
+ *                 example:
+ *                   - "sud"
+ *                   - "sanat"
  *               highlighted:
  *                 type: boolean
  *               image:
@@ -177,8 +181,8 @@ postRouter.post("/posts", verifyAdmin, upload.single("image"), createPost);
  *                   type: string
  *                 description: Post teglar ro‘yxati
  *                 example:
- *                   - "texnologiya"
- *                   - "biznes"
+ *                   - "sud"
+ *                   - "sanat"
  *               highlighted:
  *                 type: boolean
  *                 description: Postni dolzarb qilish
