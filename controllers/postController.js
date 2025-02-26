@@ -86,39 +86,37 @@ exports.createPost = async (req, res, next) => {
 
 exports.updatePost = async (req, res, next) => {
   try {
-    const { title, category, content, tags, image, highlighted } = req.body;
-    const { slug } = req.params;
+    const { title, category, content, highlighted } = req.body;
+    let tags = req.body.tags;
 
-    let post = await Post.findOne({ slug });
+    // `tags` array sifatida kelmagan bo‘lsa, uni arrayga aylantirish
+    if (!Array.isArray(tags)) {
+      tags = tags ? tags.split(",").map(tag => tag.trim()) : [];
+    }
+
+    let imagePath = "";
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`;
+    }
+
+    const post = await Post.findOne({ slug: req.params.slug });
     if (!post) {
-      const err = new Error("Bunday post topilmadi");
-      err.statusCode = 404;
-      return next(err);
+      return res.status(404).json({ message: "Post topilmadi" });
     }
 
-    if (title) post.title = title;
-    if (category) {
-      const allowedCategories = ["sud-huquq", "ijtimoiy-iqtisodiy", "boshqa", "talim", "siyosat", "xorij"];
-      if (!allowedCategories.includes(category)) {
-        const err = new Error("Bunday category yo'q");
-        err.statusCode = 400;
-        return next(err);
-      }
-      post.category = category;
-    }
-    if (image) post.image = image;
-    if (content) post.content = content;
-    if (tags) post.tags = tags;
-    if (highlighted !== undefined) post.highlighted = highlighted;
+    post.title = title || post.title;
+    post.category = category || post.category;
+    post.content = content || post.content;
+    post.tags = tags.length ? tags : post.tags;
+    post.highlighted = highlighted ?? post.highlighted;
+    if (imagePath) post.image = imagePath;
 
     await post.save();
-
-    res.json({ message: "Post yangilandi", post });
+    res.status(200).json({ message: "Post yangilandi", post });
   } catch (error) {
     next(error);
   }
-};
-
+}
 
 
 

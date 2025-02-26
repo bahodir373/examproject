@@ -155,24 +155,38 @@ postRouter.post("/posts", verifyAdmin, upload.single("image"), createPost);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
  *               title:
  *                 type: string
+ *                 description: Post sarlavhasi
+ *                 example: "Yangi post sarlavhasi"
  *               category:
  *                 type: string
+ *                 description: Post kategoriyasi
+ *                 example: "ijtimoiy-iqtisodiy"
  *               content:
  *                 type: string
+ *                 description: Post matni
+ *                 example: "Bu postning to'liq matni..."
  *               tags:
  *                 type: array
  *                 items:
  *                   type: string
+ *                 description: Post teglar ro‘yxati
+ *                 example:
+ *                   - "texnologiya"
+ *                   - "biznes"
  *               highlighted:
  *                 type: boolean
+ *                 description: Postni dolzarb qilish
+ *                 example: true
  *               image:
  *                 type: string
+ *                 format: binary
+ *                 description: Post uchun rasm
  *     responses:
  *       200:
  *         description: Post muvaffaqiyatli yangilandi
@@ -193,6 +207,7 @@ postRouter.post("/posts", verifyAdmin, upload.single("image"), createPost);
  *       500:
  *         description: Server xatosi
  */
+
 postRouter.put("/posts/:slug", verifyAdmin, updatePost);
 
 /**
