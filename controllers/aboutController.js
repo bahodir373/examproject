@@ -8,7 +8,15 @@ exports.createAuthor = async (req, res, next) => {
       achievements = achievements ? achievements.split(",").map(tag => tag.trim()) : [];
     }
 
-    const image = req.file ? req.file.filename : null;
+    let imagePath = "";
+
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`;
+    } else {
+      const err = new Error("Rasm yuklanmagan");
+      err.statusCode = 400;
+      return next(err);
+    }
 
     if (!fullName) {
       const error = new Error("Ismingizni to'liq kiriting");
@@ -23,7 +31,7 @@ exports.createAuthor = async (req, res, next) => {
       education,
       achievements,
       website,
-      image
+      image: imagePath
     });
 
     await newAuthor.save();
