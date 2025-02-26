@@ -83,8 +83,8 @@ const upload = multer({ storage });
  *                 example: "Toshkent Davlat Universiteti"
  *               achievements:
  *                 type: string
- *                 description: Yutuqlari
- *                 example: 'yutuq1, yutuq2, (Har bir yutuq vergul bilan ajratiladi)'
+ *                 description: Yutuqlari(Har bir yutuq vergul bilan ajratiladi)
+ *                 example: 'yutuq1, yutuq2'
  *               website:
  *                 type: string
  *                 description: Shaxsiy veb-sayti
@@ -136,6 +136,8 @@ aboutRouter.post('/author', verifyAdmin, upload.single('image'), createAuthor);
  *                 type: string
  *               achievements:
  *                 type: string
+ *                 description: Yutuqlari(Har bir yutuq vergul bilan ajratiladi)
+ *                 example: 'yutuq1, yutuq2'
  *               website:
  *                 type: string
  *               image:
