@@ -82,9 +82,13 @@ const upload = multer({ storage });
  *                 description: Ta’limi
  *                 example: "Toshkent Davlat Universiteti"
  *               achievements:
- *                 type: string
- *                 description: Yutuqlari(Har bir yutuq vergul bilan ajratiladi)
- *                 example: 'yutuq1, yutuq2'
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Erishilgan yutuqlar ro‘yxati
+ *                 example:
+ *                   - "yutuq1"
+ *                   - "yutuq2"
  *               website:
  *                 type: string
  *                 description: Shaxsiy veb-sayti
