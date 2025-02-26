@@ -101,9 +101,9 @@ const upload = multer({ storage });
  *               content:
  *                 type: string
  *               tags:
- *                 type: array
- *                 items:
- *                   type: string
+ *                 type: string
+ *                 description: Tag nomlari(Har bir tag vergul bilan ajratiladi)
+ *                 example: 'sanat, Texnologiya'
  *               highlighted:
  *                 type: boolean
  *               image:
