@@ -17,6 +17,7 @@ exports.createAuthor = async (req, res, next) => {
       err.statusCode = 400;
       return next(err);
     }
+    console.log(req.file);
 
     if (!fullName) {
       const error = new Error("Ismingizni to'liq kiriting");
@@ -33,6 +34,7 @@ exports.createAuthor = async (req, res, next) => {
       website,
       image: imagePath
     });
+    console.log(newAuthor);
 
     await newAuthor.save();
     res.status(201).json({ message: 'Muallif muvaffaqiyatli yaratildi', author: newAuthor });
