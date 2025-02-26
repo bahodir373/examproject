@@ -144,8 +144,8 @@ aboutRouter.post('/author', verifyAdmin, upload.single('image'), createAuthor);
  *                   type: string
  *                 description: Erishilgan yutuqlar ro‘yxati
  *                 example:
- *                   - "yutuq1"
- *                   - "yutuq2"
+ *                   - "yutuq3"
+ *                   - "yutuq4"
  *               website:
  *                 type: string
  *               image:

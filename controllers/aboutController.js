@@ -46,7 +46,10 @@ exports.updateAuthor = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { fullName, birthDate, birthPlace, education, website } = req.body;
-    const achievements = req.body.achievements ? req.body.achievements.split(',').map(a => a.trim()) : [];
+    let achievements = req.body.achievements;
+    if (!Array.isArray(achievements)) {
+      achievements = achievements ? achievements.split(",").map(tag => tag.trim()) : [];
+    }
 
     const updateData = {
       ...(fullName && { fullName }),
