@@ -39,9 +39,9 @@ exports.getPostBySlug = async (req, res, next) => {
 
 exports.createPost = async (req, res, next) => {
   try {
-    const { title, category, content, tagsString, highlighted } = req.body;
+    const { title, category, content, tags, highlighted } = req.body;
 
-    let tags = tagsString.split(",").map(tag => tag.trim().toLowerCase());
+    let newTags = tags.split(",").map(tag => tag.trim().toLowerCase());
 
     let imagePath = "";
 
@@ -53,7 +53,7 @@ exports.createPost = async (req, res, next) => {
       return next(err);
     }
 
-    const tagDocs = await Tag.find({ name: { $in: tags } });
+    const tagDocs = await Tag.find({ name: { $in: newTags } });
     const tagIds = tagDocs.map(tag => tag.id);
 
     if (tagIds.length !== tags.length) {
