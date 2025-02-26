@@ -3,7 +3,7 @@ const Author = require('../models/Author');
 exports.createAuthor = async (req, res, next) => {
   try {
     const { fullName, birthDate, birthPlace, education, website } = req.body;
-    const achievements = req.body.achievements ? JSON.parse(req.body.achievements) : [];
+    const achievements = req.body.achievements ? req.body.achievements.split(',').map(a => a.trim()) : [];
     const image = req.file ? req.file.filename : null;
 
     if (!fullName) {
